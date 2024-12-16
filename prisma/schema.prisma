@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Auth {
+  id           String         @id @default(uuid())
+  name         String         @default("Anonymous")
+  email        String         @unique
+  password     String
+  role         Role           @default(Customer)
+  status       Status         @default(Active)
+  isDeleted    Boolean        @default(false)
+  Shop         Shop[]
+  Cart         Cart[]
+  Reviews      Review[]
+  Order        Order[]
+  followedShop followedShop[]
+  Transaction  Transaction[]
+}
+
+enum Role {
+  Admin
+  Customer
+  Vendor
+}
+
+enum Status {
+  Active
+  Blocked
+}
+
+model Shop {
+  id           String         @id @default(uuid())
+  userId       String
+  name         String
+  logo         String?
+  description  String?
+  status       ShopStatus     @default(White)
+  user         Auth           @relation(fields: [userId], references: [id])
+  Product      Product[]
+  followedShop followedShop[]
+  Transaction  Transaction[]
+}
+
+enum ShopStatus {
+  Black
+  White
+}
+
+model Coupon {
+  id       String       @id @default(uuid())
+  name     String
+  code     String
+  discount Int
+  status   CouponStatus @default(Active)
+}
+
+enum CouponStatus {
+  Active
+  Invalid
+}
+
+model followedShop {
+  userId String
+  shopId String
+
+  user Auth @relation(fields: [userId], references: [id])
+  shop Shop @relation(fields: [shopId], references: [id])
+
+  @@id([userId, shopId])
+}
+
+model Category {
+  id      String    @id @default(uuid())
+  name    String
+  Product Product[]
+}
+
+model Product {
+  id           String       @id @default(uuid())
+  shopId       String
+  categoryId   String
+  name         String
+  description  String?
+  code         String?
+  images       String[]
+  price        Int
+  discount     Int
+  discountType DiscountType @default(Regular)
+  stock        Int
+  shop         Shop         @relation(fields: [shopId], references: [id])
+  category     Category     @relation(fields: [categoryId], references: [id])
+  Cart         Cart[]
+  Reviews      Review[]
+  Order        Order[]
+}
+
+enum DiscountType {
+  Regular
+  Flash
+}
+
+model Cart {
+  id        String  @id @default(uuid())
+  userId    String
+  productId String
+  qty       Int
+  user      Auth    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  userId    String
+  productId String
+  qty       Int
+  createdAt DateTime @default(now())
+  user      Auth     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  Review    Review?
+}
+
+model Review {
+  id          String  @id @default(uuid())
+  orderId     String? @unique
+  userId      String
+  productId   String
+  rating      Float
+  description String
+  user        Auth    @relation(fields: [userId], references: [id])
+  product     Product @relation(fields: [productId], references: [id])
+  order       Order?  @relation(fields: [orderId], references: [id])
+}
+
+model Transaction {
+  id     String @id @default(uuid())
+  userId String
+  shopId String
+  amount Int
+  user   Auth   @relation(fields: [userId], references: [id])
+  shop   Shop   @relation(fields: [shopId], references: [id])
+}
