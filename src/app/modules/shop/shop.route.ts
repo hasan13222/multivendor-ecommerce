@@ -14,8 +14,8 @@ router.post(
 );
 router.post("/follow/:shopId", verifyToken(), shopController.followShop);
 router.delete("/unfollow/:shopId", verifyToken(), shopController.unfollowShop);
-router.get("/", verifyToken("Admin"), shopController.getAllShop);
-router.get("/:id", verifyToken(), shopController.getSingleShop);
+router.get("/", shopController.getAllShop);
+router.get("/:id", shopController.getSingleShop);
 router.get(
   "/check-follow/:shopId",
   verifyToken(),

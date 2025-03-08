@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.productRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const validateRequest_1 = require("../../middleware/validateRequest");
+const verifyToken_1 = require("../../middleware/verifyToken");
+const product_validation_1 = require("./product.validation");
+const product_controller_1 = require("./product.controller");
+const router = express_1.default.Router();
+router.post("/", (0, verifyToken_1.verifyToken)("Vendor", "Admin"), (0, validateRequest_1.validateRequest)(product_validation_1.productValidations.createProductValidationSchema), product_controller_1.productController.createProduct);
+router.patch("/:id", (0, verifyToken_1.verifyToken)("Vendor", "Admin"), (0, validateRequest_1.validateRequest)(product_validation_1.productValidations.updateProductValidationSchema), product_controller_1.productController.updateProduct);
+router.delete("/:id", (0, verifyToken_1.verifyToken)("Vendor", "Admin"), product_controller_1.productController.deleteProduct);
+router.get("/", product_controller_1.productController.getAllProduct);
+router.post("/cart", product_controller_1.productController.getCartProduct);
+router.get("/:id", product_controller_1.productController.getSingleProduct);
+router.get("/shop/:shopId", product_controller_1.productController.getShopProduct);
+exports.productRoutes = router;

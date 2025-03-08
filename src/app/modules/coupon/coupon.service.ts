@@ -19,10 +19,15 @@ const getCouponFromDB = async (code: string) => {
   });
   return result;
 };
+const getAllCouponFromDB = async () => {
+  const result = await prisma.coupon.findMany();
+  return result;
+};
 
 export const couponServices = {
   createCouponIntoDB,
   updateCouponIntoDB,
   deleteCouponIntoDB,
   getCouponFromDB,
+  getAllCouponFromDB
 };

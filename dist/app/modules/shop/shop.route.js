@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.shopRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const validateRequest_1 = require("../../middleware/validateRequest");
+const shop_validation_1 = require("./shop.validation");
+const shop_controller_1 = require("./shop.controller");
+const verifyToken_1 = require("../../middleware/verifyToken");
+const router = express_1.default.Router();
+router.post("/", (0, verifyToken_1.verifyToken)("Vendor", "Admin"), (0, validateRequest_1.validateRequest)(shop_validation_1.shopValidations.createShopValidationSchema), shop_controller_1.shopController.createShop);
+router.post("/follow/:shopId", (0, verifyToken_1.verifyToken)(), shop_controller_1.shopController.followShop);
+router.delete("/unfollow/:shopId", (0, verifyToken_1.verifyToken)(), shop_controller_1.shopController.unfollowShop);
+router.get("/", shop_controller_1.shopController.getAllShop);
+router.get("/:id", shop_controller_1.shopController.getSingleShop);
+router.get("/check-follow/:shopId", (0, verifyToken_1.verifyToken)(), shop_controller_1.shopController.checkShopFollow);
+router.get("/shop/mine", (0, verifyToken_1.verifyToken)("Vendor", "Admin"), shop_controller_1.shopController.getMyShop);
+router.patch("/:id", (0, verifyToken_1.verifyToken)("Vendor", "Admin"), (0, validateRequest_1.validateRequest)(shop_validation_1.shopValidations.updateShopValidationSchema), shop_controller_1.shopController.updateShop);
+router.patch("/change-shop-status/:id", (0, verifyToken_1.verifyToken)("Admin"), shop_controller_1.shopController.changeShopStatus);
+router.delete("/:id", (0, verifyToken_1.verifyToken)("Vendor", "Admin"), shop_controller_1.shopController.deleteShop);
+exports.shopRoutes = router;

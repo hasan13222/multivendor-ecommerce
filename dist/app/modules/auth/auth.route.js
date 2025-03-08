@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const auth_controller_1 = require("./auth.controller");
+const validateRequest_1 = require("../../middleware/validateRequest");
+const auth_validation_1 = require("./auth.validation");
+const verifyToken_1 = require("../../middleware/verifyToken");
+const router = express_1.default.Router();
+router.get("/", (0, verifyToken_1.verifyToken)("Admin"), auth_controller_1.authController.getAllUser);
+router.post("/register", (0, validateRequest_1.validateRequest)(auth_validation_1.authValidations.registerUserValidationSchema), auth_controller_1.authController.registerUser);
+router.post("/login", (0, validateRequest_1.validateRequest)(auth_validation_1.authValidations.loginValidationSchema), auth_controller_1.authController.loginUser);
+router.post("/change-password", (0, verifyToken_1.verifyToken)(), (0, validateRequest_1.validateRequest)(auth_validation_1.authValidations.changePasswordValidationSchema), auth_controller_1.authController.changePassword);
+router.post("/refresh-token", auth_controller_1.authController.refreshToken);
+router.post("/change-account-status/:id", (0, verifyToken_1.verifyToken)("Admin"), (0, validateRequest_1.validateRequest)(auth_validation_1.authValidations.changeStatusValidationSchema), auth_controller_1.authController.changeStatus);
+router.post("/delete-account/:id", (0, verifyToken_1.verifyToken)("Admin"), auth_controller_1.authController.deleteUser);
+router.post('/forget-password', (0, validateRequest_1.validateRequest)(auth_validation_1.authValidations.forgetPasswordValidationSchema), auth_controller_1.authController.forgetPassword);
+router.post('/reset-password', (0, verifyToken_1.verifyToken)(), (0, validateRequest_1.validateRequest)(auth_validation_1.authValidations.resetPasswordValidationSchema), auth_controller_1.authController.resetPassword);
+exports.authRoutes = router;

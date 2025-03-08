@@ -96,6 +96,8 @@ const getAllProductFromDB = async (params: any) => {
     });
   }
 
+  const totalProducts = await prisma.product.count({where: {AND: filterCondition}})
+
   const result = await prisma.product.findMany({
     where: { AND: filterCondition },
     include: {
@@ -107,6 +109,7 @@ const getAllProductFromDB = async (params: any) => {
       },
     },
     take: Number(params.limit) || 100000,
+    skip: params.page ? (Number(params.page)-1) * Number(params.limit) : 0,
     orderBy: [
       {
         shop: {
@@ -119,7 +122,9 @@ const getAllProductFromDB = async (params: any) => {
     ],
   });
 
-  return result;
+  console.log(params.page)
+
+  return {result, meta: {page: params.page || 1, total: totalProducts, limit: Number(params.limit)}};
 };
 const getShopProductFromDB = async (shopId: string, params: any) => {
   const result = await prisma.product.findMany({

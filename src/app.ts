@@ -8,7 +8,7 @@ const app: Application = express();
 
 // cors middleware
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "https://multivendor-ecommerce-frontend-gilt.vercel.app"],
   credentials: true,
 };
 app.use(cors(corsOptions));

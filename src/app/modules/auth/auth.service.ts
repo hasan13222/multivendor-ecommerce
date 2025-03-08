@@ -97,7 +97,7 @@ const sendLinkToEmail = async (payload: TChangePassword) => {
     }
   );
 
-  const resetLink = `http://localhost:5173/reset-password?id=${user.id}&token=${accessToken}`;
+  const resetLink = `https://multivendor-ecommerce-frontend-gilt.vercel.app/reset-password?id=${user.id}&token=${accessToken}`;
   sendEmail(user.email, resetLink);
 };
 

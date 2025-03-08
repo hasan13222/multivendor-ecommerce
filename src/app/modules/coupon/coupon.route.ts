@@ -8,5 +8,6 @@ router.post("/", verifyToken("Admin"), couponController.createCoupon);
 router.patch("/:id", verifyToken("Admin"), couponController.updateCoupon);
 router.delete("/:id", verifyToken("Admin"), couponController.deleteCoupon);
 router.get("/", couponController.getCoupon);
+router.get("/all", couponController.getAllCoupon);
 
 export const couponRoutes = router;

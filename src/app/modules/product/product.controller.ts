@@ -44,7 +44,8 @@ const getAllProduct = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     status: StatusCodes.OK,
     message: "Product Retrieved successfully",
-    data: result,
+    data: result.result,
+    meta: result.meta
   });
 });
 const getCartProduct = catchAsync(async (req: Request, res: Response) => {

@@ -9,7 +9,7 @@ const createShopIntoDB = async (payload: Shop) => {
 };
 
 const getAllShopFromDB = async () => {
-  const result = await prisma.shop.findMany();
+  const result = await prisma.shop.findMany({include: {followedShop: true}});
   return result;
 };
 

@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 export const sendResponse = <T>(
   res: Response,
-  data: { status?: number; success?: boolean; message?: string; data: T },
+  data: { status?: number; success?: boolean; message?: string; data: T;meta?: any },
 ) => {
   data.status = data.status || StatusCodes.OK;
   data.success = data.success || true;
@@ -19,5 +19,6 @@ export const sendResponse = <T>(
     status: data.status,
     message: data.message,
     data: data.data,
+    meta: data.meta || null
   });
 };
