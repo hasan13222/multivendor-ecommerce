@@ -83,22 +83,23 @@ model Category {
 }
 
 model Product {
-  id           String       @id @default(uuid())
-  shopId       String
-  categoryId   String
-  name         String
-  description  String?
-  code         String?
-  images       String[]
-  price        Int
-  discount     Int
-  discountType DiscountType @default(Regular)
-  stock        Int
-  shop         Shop         @relation(fields: [shopId], references: [id])
-  category     Category     @relation(fields: [categoryId], references: [id])
-  Cart         Cart[]
-  Reviews      Review[]
-  Order        Order[]
+  id               String       @id @default(uuid())
+  shopId           String
+  categoryId       String
+  name             String
+  description      String?
+  long_description String?      @default("Long Desc")
+  code             String?
+  images           String[]
+  price            Int
+  discount         Int
+  discountType     DiscountType @default(Regular)
+  stock            Int
+  shop             Shop         @relation(fields: [shopId], references: [id])
+  category         Category     @relation(fields: [categoryId], references: [id])
+  Cart             Cart[]
+  Reviews          Review[]
+  Order            Order[]
 }
 
 enum DiscountType {
@@ -118,49 +119,56 @@ model Cart {
 }
 
 model Order {
-  id        String   @id @default(uuid())
+  id        String      @id @default(uuid())
   userId    String
   productId String
   qty       Int
-  createdAt DateTime @default(now())
-  user      Auth     @relation(fields: [userId], references: [id])
-  product   Product  @relation(fields: [productId], references: [id])
+  status    OrderStatus @default(Processing)
+  createdAt DateTime    @default(now())
+  user      Auth        @relation(fields: [userId], references: [id])
+  product   Product     @relation(fields: [productId], references: [id])
   Review    Review?
 }
 
+enum OrderStatus {
+  Processing
+  Delivered
+  Cancelled
+}
+
 model Review {
-  id          String  @id @default(uuid())
-  orderId     String? @unique
+  id          String   @id @default(uuid())
+  orderId     String?  @unique
   userId      String
   productId   String
   rating      Float
   description String
-  createdAt DateTime @default(now())
-  user        Auth    @relation(fields: [userId], references: [id])
-  product     Product @relation(fields: [productId], references: [id])
-  order       Order?  @relation(fields: [orderId], references: [id])
+  createdAt   DateTime @default(now())
+  user        Auth     @relation(fields: [userId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])
+  order       Order?   @relation(fields: [orderId], references: [id])
 }
 
 model Transaction {
-  id     String @id @default(uuid())
-  userId String
-  shopId String
-  amount Int
+  id        String   @id @default(uuid())
+  userId    String
+  shopId    String
+  amount    Int
   createdAt DateTime @default(now())
-  user   Auth   @relation(fields: [userId], references: [id])
-  shop   Shop   @relation(fields: [shopId], references: [id])
+  user      Auth     @relation(fields: [userId], references: [id])
+  shop      Shop     @relation(fields: [shopId], references: [id])
 }
 
 model Contact {
-  id      String @id @default(uuid())
-  name    String
-  email   String
-  message String
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
   createdAt DateTime @default(now())
 }
 
 model Newsletter {
-  id      String @id @default(uuid())
-  email   String
+  id        String   @id @default(uuid())
+  email     String
   createdAt DateTime @default(now())
 }

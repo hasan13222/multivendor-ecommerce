@@ -5,11 +5,12 @@ const createOrderIntoDB = async (payload: Order[]) => {
   const result = await prisma.order.createMany({ data: payload });
   return result;
 };
+
 const createTransactionIntoDB = async (payload: any) => {
   const shop = await prisma.product.findFirstOrThrow({
     where: { id: payload.productId },
   });
-  const newTr = {amount: payload.amount, userId: payload.userId}
+  const newTr = { amount: payload.amount, userId: payload.userId };
   const result = await prisma.transaction.create({
     data: { ...newTr, shopId: shop?.shopId },
   });
@@ -38,9 +39,15 @@ const getMyShopOrderFromDB = async (userId: string) => {
   return result;
 };
 
+const changeOrderStatusIntoDb = async (id: string, payload: Order) => {
+  const result = await prisma.order.update({ where: { id }, data: payload });
+  return result;
+};
+
 export const orderServices = {
   createOrderIntoDB,
   getMyOrderFromDB,
   getMyShopOrderFromDB,
   createTransactionIntoDB,
+  changeOrderStatusIntoDb,
 };

@@ -29,6 +29,7 @@ const updateProductIntoDB = async (
       "You are not allowed to update other vendor product"
     );
   }
+  
   const result = await prisma.product.update({
     where: { id },
     data: payload,

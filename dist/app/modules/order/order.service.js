@@ -47,9 +47,14 @@ const getMyShopOrderFromDB = (userId) => __awaiter(void 0, void 0, void 0, funct
     });
     return result;
 });
+const changeOrderStatusIntoDb = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prismaClient_1.prisma.order.update({ where: { id }, data: payload });
+    return result;
+});
 exports.orderServices = {
     createOrderIntoDB,
     getMyOrderFromDB,
     getMyShopOrderFromDB,
     createTransactionIntoDB,
+    changeOrderStatusIntoDb,
 };

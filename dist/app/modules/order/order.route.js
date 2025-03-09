@@ -12,4 +12,5 @@ router.post("/", (0, verifyToken_1.verifyToken)(), order_controller_1.orderContr
 router.post("/payment", (0, verifyToken_1.verifyToken)(), order_controller_1.orderController.orderPayment);
 router.get("/my-order", (0, verifyToken_1.verifyToken)(), order_controller_1.orderController.getMyOrder);
 router.get("/my-shop-order", (0, verifyToken_1.verifyToken)(), order_controller_1.orderController.getMyShopOrder);
+router.patch("/:id", (0, verifyToken_1.verifyToken)("Vendor", "Customer"), order_controller_1.orderController.changeOrderStatus);
 exports.orderRoutes = router;

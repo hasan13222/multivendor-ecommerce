@@ -77,9 +77,18 @@ const orderPayment = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0
         },
     });
 }));
+const changeOrderStatus = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield order_service_1.orderServices.changeOrderStatusIntoDb(req.params.id, req.body);
+    (0, sendResponse_1.sendResponse)(res, {
+        status: http_status_codes_1.StatusCodes.OK,
+        message: "Order Status Changed successfully",
+        data: result,
+    });
+}));
 exports.orderController = {
     createOrder,
     getMyOrder,
     getMyShopOrder,
     orderPayment,
+    changeOrderStatus
 };

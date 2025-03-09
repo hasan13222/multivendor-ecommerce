@@ -14,5 +14,6 @@ router.post(
 router.post("/payment", verifyToken(), orderController.orderPayment)
 router.get("/my-order", verifyToken(), orderController.getMyOrder);
 router.get("/my-shop-order", verifyToken(), orderController.getMyShopOrder);
+router.patch("/:id", verifyToken("Vendor", "Customer"), orderController.changeOrderStatus);
 
 export const orderRoutes = router;
