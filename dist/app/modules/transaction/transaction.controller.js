@@ -21,7 +21,7 @@ const getAllTransaction = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(v
     const result = yield transaction_service_1.transactionServices.getAllTransactionFromDB();
     (0, sendResponse_1.sendResponse)(res, {
         status: http_status_codes_1.StatusCodes.CREATED,
-        message: "Transaction Created successfully",
+        message: "Transaction Retrieved successfully",
         data: result,
     });
 }));
@@ -34,7 +34,7 @@ const getMyTransaction = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(vo
     });
 }));
 const getMyShopTransaction = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield transaction_service_1.transactionServices.getMyShopTransactionFromDB(req.user.id);
+    const result = yield transaction_service_1.transactionServices.getMyShopTransactionFromDB(req.params.shopId);
     (0, sendResponse_1.sendResponse)(res, {
         status: http_status_codes_1.StatusCodes.OK,
         message: "Transaction Retrieved successfully",

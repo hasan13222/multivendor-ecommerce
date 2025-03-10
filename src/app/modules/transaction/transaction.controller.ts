@@ -12,7 +12,7 @@ const getAllTransaction = catchAsync(async (req: Request, res: Response) => {
 
   sendResponse(res, {
     status: StatusCodes.CREATED,
-    message: "Transaction Created successfully",
+    message: "Transaction Retrieved successfully",
     data: result,
   });
 });
@@ -28,7 +28,7 @@ const getMyTransaction = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getMyShopTransaction = catchAsync(async (req: Request, res: Response) => {
-  const result = await transactionServices.getMyShopTransactionFromDB(req.user.id);
+  const result = await transactionServices.getMyShopTransactionFromDB(req.params.shopId);
 
   sendResponse(res, {
     status: StatusCodes.OK,

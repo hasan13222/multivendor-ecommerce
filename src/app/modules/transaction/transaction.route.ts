@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get("/", verifyToken("Admin"), transactionController.getAllTransaction)
 router.get("/my-transaction", verifyToken(), transactionController.getMyTransaction);
-router.get("/my-shop-transaction", verifyToken("Vendor"), transactionController.getMyShopTransaction);
+router.get("/my-shop-transaction/:shopId", verifyToken("Vendor"), transactionController.getMyShopTransaction);
 
 export const transactionRoutes = router;

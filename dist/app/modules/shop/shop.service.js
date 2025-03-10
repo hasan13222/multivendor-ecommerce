@@ -21,7 +21,7 @@ const createShopIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
     return result;
 });
 const getAllShopFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prismaClient_1.prisma.shop.findMany({ include: { followedShop: true } });
+    const result = yield prismaClient_1.prisma.shop.findMany({ include: { followedShop: true, _count: { select: { Product: true } } } });
     return result;
 });
 const getMyShopFromDB = (email) => __awaiter(void 0, void 0, void 0, function* () {
