@@ -14,6 +14,7 @@ const review_route_1 = require("../modules/review/review.route");
 const coupon_route_1 = require("../modules/coupon/coupon.route");
 const contact_route_1 = require("../modules/contact/contact.route");
 const newsletter_route_1 = require("../modules/newsletter/newsletter.route");
+const transaction_route_1 = require("../modules/transaction/transaction.route");
 const router = express_1.default.Router();
 const moduleRouters = [
     {
@@ -55,6 +56,10 @@ const moduleRouters = [
     {
         path: "/newsletter",
         routes: newsletter_route_1.newsletterRoutes,
+    },
+    {
+        path: "/transaction",
+        routes: transaction_route_1.transactionRoutes,
     },
 ];
 moduleRouters.forEach((route) => {

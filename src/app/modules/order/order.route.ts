@@ -1,7 +1,5 @@
 import express from "express";
-import { validateRequest } from "../../middleware/validateRequest";
 import { verifyToken } from "../../middleware/verifyToken";
-import { orderValidations } from "./order.validation";
 import { orderController } from "./order.controller";
 
 const router = express.Router();
