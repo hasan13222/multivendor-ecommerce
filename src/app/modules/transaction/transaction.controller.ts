@@ -5,9 +5,7 @@ import { transactionServices } from "./transaction.service";
 import { StatusCodes } from "http-status-codes";
 
 const getAllTransaction = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body.map((item: any) => {
-    return { ...item, userId: req.user.id };
-  });
+  
   const result = await transactionServices.getAllTransactionFromDB();
 
   sendResponse(res, {

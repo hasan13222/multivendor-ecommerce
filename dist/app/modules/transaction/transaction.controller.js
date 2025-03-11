@@ -15,9 +15,6 @@ const sendResponse_1 = require("../../utils/sendResponse");
 const transaction_service_1 = require("./transaction.service");
 const http_status_codes_1 = require("http-status-codes");
 const getAllTransaction = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const payload = req.body.map((item) => {
-        return Object.assign(Object.assign({}, item), { userId: req.user.id });
-    });
     const result = yield transaction_service_1.transactionServices.getAllTransactionFromDB();
     (0, sendResponse_1.sendResponse)(res, {
         status: http_status_codes_1.StatusCodes.CREATED,
