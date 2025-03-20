@@ -20,6 +20,9 @@ const getMyOrderFromDB = async (userId: string) => {
   const result = await prisma.order.findMany({
     where: { userId: userId },
     include: { product: true },
+    orderBy: {
+      createdAt: "desc"
+    }
   });
   return result;
 };
@@ -35,6 +38,9 @@ const getMyShopOrderFromDB = async (userId: string) => {
     include: {
       product: true,
     },
+    orderBy: {
+      createdAt: "desc"
+    }
   });
   return result;
 };

@@ -8,6 +8,7 @@ const createReviewIntoDB = async (userId: string, payload: Review) => {
   const result = await prisma.review.create({ data: { ...payload, userId } });
   return result;
 };
+
 const getProductReviewFromDB = async (productId: string) => {
   const result = await prisma.review.findMany({
     where: { productId: productId },

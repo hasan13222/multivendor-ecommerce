@@ -12,12 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.transactionServices = void 0;
 const prismaClient_1 = require("../../constants/prismaClient");
 const getAllTransactionFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prismaClient_1.prisma.transaction.findMany();
+    const result = yield prismaClient_1.prisma.transaction.findMany({
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
     return result;
 });
 const getMyTransactionFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prismaClient_1.prisma.transaction.findMany({
         where: { userId: userId },
+        orderBy: {
+            createdAt: "desc"
+        }
     });
     return result;
 });
@@ -26,6 +33,9 @@ const getMyShopTransactionFromDB = (shopId) => __awaiter(void 0, void 0, void 0,
         where: {
             shopId: shopId,
         },
+        orderBy: {
+            createdAt: "desc"
+        }
     });
     return result;
 });

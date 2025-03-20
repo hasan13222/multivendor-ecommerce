@@ -29,6 +29,9 @@ const getMyOrderFromDB = (userId) => __awaiter(void 0, void 0, void 0, function*
     const result = yield prismaClient_1.prisma.order.findMany({
         where: { userId: userId },
         include: { product: true },
+        orderBy: {
+            createdAt: "desc"
+        }
     });
     return result;
 });
@@ -44,6 +47,9 @@ const getMyShopOrderFromDB = (userId) => __awaiter(void 0, void 0, void 0, funct
         include: {
             product: true,
         },
+        orderBy: {
+            createdAt: "desc"
+        }
     });
     return result;
 });
